@@ -13,3 +13,6 @@ Degrees of freedom(df): independent pieces of information used in the calculatio
 当样本数据的个数为n时，若样本平均数 x拔 确定后，则附加给n个观测值的约束个数就是1个，一次只有n-1个数据可以自由取值，其中必有一个数据不能自由取值。在计算离差平方和 ∑(xi -x)2 时，必须先求出样本平均数 x拔，而 x拔 则是附加给 ∑(xi -x)2 的一个约束，因此，计算离差平方和时只有n-1个独立的观测值，而不是n个。因为在均值确定后，如果知道了其中n-1个数的值，第n个数的值也就确定了。而在计算离差平方和 ∑(xi -x)2 时，必须先求出均值 x拔，均值就相当于一个限制条件，由于加了这个限制条件，估计总体方差的自由度为n-1。】
 ![image](https://user-images.githubusercontent.com/82482927/132413066-4b66a9fa-d0ee-4c09-83cb-8113ae2a0eea.png)
 The likelihood that the survey proportion is close to the population proportion determines out confidence in the survey result.
+sample space: sets of all possible outcomes; s{...} event: a subset of the sample space.
+probability of an outcome:p(0,1)
+probability of an event: the sum of the probabilities of the individual outcomes of which it is composed. P(A)
