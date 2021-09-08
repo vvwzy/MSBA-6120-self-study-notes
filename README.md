@@ -16,3 +16,12 @@ The likelihood that the survey proportion is close to the population proportion 
 sample space: sets of all possible outcomes; s{...} event: a subset of the sample space.
 probability of an outcome:p(0,1)
 probability of an event: the sum of the probabilities of the individual outcomes of which it is composed. P(A)
+complement of an event
+the intersection of events
+mutually exclusive
+union of events
+addive rule of probability
+conditional probability and independent events: P(A|B):the conditional probability of A given B : P（A|B)=P(A交B)/P(B)可以这么理解：条件概率时，例如计算在已经确定B发生的前提下，A发生的概率时，将B当作sample space，此时，P（B）= 1， 取出A在B中的部分，除以此刻的S，即B，得到P(A|B)
+propotion:当下的概率 likelihood：未来发生的概率
+likelihood interpretations:1.Frequentist: limit of the relative frequency of "comparable" events in the long run / law of large numbers(LLN) 2.Subjective: "Degree of believe"
+In LLN, the process is not self correcting, instead, it operates by washing out deviations.
