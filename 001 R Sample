@@ -1,0 +1,116 @@
+# SMOKING DATA
+
+# Install the readxl package from the Packages tab within RStudio first
+# (this you should only need to do once)
+# Then load the library needed to read Excel files (each time you run the program)
+library(readxl)
+# then load the data
+Smoking<-read_excel("Smoking.xlsx", na="NA", col_names = TRUE)
+# The variables in the data now can be viewed in the Environment tab in RStudio
+
+# Some basic descriptive capabilities in the main R package
+   # Numerical description
+summary(Smoking)
+mean(Smoking$amtWeekends, na.rm=T)
+
+   # Graphical description
+      # graphs for interval variables
+         # histogram: age, with normal curve
+h <- hist(Smoking$age)
+            # code to add normal curve (www.statmethods.net)
+x <- Smoking$age
+xfit <- seq(min(x), max(x), length = 40)
+yfit <- dnorm(xfit, mean = mean(x), sd = sd(x))
+yfit <- yfit*diff(h$mids[1:2])*length(x)
+lines(xfit, yfit, col="blue")
+
+         # box plots
+boxplot(Smoking$age)
+boxplot(Smoking$amtWeekends)
+
+         # scatterplot: with regression line added
+plot(Smoking$amtWeekdays, Smoking$amtWeekends, pch = 16, main = "Smoking", xlab = Weekdays", ylab = "Weekends")
+abline(lm(Smoking$amtWeekends~Smoking$amtWeekdays), lty=2, col="red")
+
+      # bar charts for nominal and ordinal variables
+         # sex
+sexCount <- table(Smoking$sex)
+sexCount
+barplot(sexCount, ylim = c(0,1000), main="Sex")
+
+         # marital status
+temp <- table(Smoking$maritalStatus)
+barplot(temp, main = "Marital Status")
+            # factor function to reorder the categories before graphing
+maritalSort<-factor(Smoking$maritalStatus, levels = c("Single", "Married", "Widowed","Divorced","Separated"))
+maritalCount <- table(maritalSort)
+            # see the re-ordered categories:
+maritalCount
+            # reordered bar chart, and las=2 to make x-axis labels vertical
+barplot(maritalCount, main = "Marital Status", las = 2)
+
+         # another example of re-ordering, ordinal data: income
+incomeSort<-factor(Smoking$grossIncome, levels = c("Under 2,600","2,600 to 5,200","5,200 to 10,400","10,400 to 15,600","15,600 to 20,800","20,800 to 28,600","28,600 to 36,400","Above 36,400","Refused","Unknown"))
+incomeCount <- table(incomeSort)
+incomeCount
+barplot(incomeCount, main = "Income", las = 2)
+
+         # re-ordering by decreasing frequency, nominal data: region
+regionSort<-factor(Smoking$region, levels = c("Midlands & East Anglia","The North","South East","London","South West","Scotland","Wales"))
+regionCount <- table(regionSort)
+regionCount
+barplot(regionCount, main = "Region", las = 2)
+
+         # stacked bar chart: smoke by region
+smoke_regionCount<-table(Smoking$smoke, regionSort)
+smoke_regionCount
+barplot(smoke_regionCount, main="Smoke by Region", las = 2, ylim = c(0, 500), legend = rownames(smoke_regionCount))
+
+         # grouped bar chart: smoke by region
+barplot(smoke_regionCount, main="Smoke by Region", las = 2, legend = rownames(smoke_regionCount), beside = T)
+
+
+# MARATHON DATA
+
+# Load the data from a csv file
+marathon <- read.table("marathon.csv", header = TRUE, sep = ",", strip.white = TRUE)
+
+# Example of a bimodal distribution
+hist(marathon$Time, breaks = 10)
+
+# Some other descriptive capabilities in other packages
+# Install the pastecs and ggplot2 packages from the Packages tab before.
+
+   # Numerical description
+
+      # Loading the library containg the stat function
+library(pastecs)
+      # Useful function within pastecs package
+stat.desc(Smoking[,c('age','amtWeekends','amtWeekdays')])
+
+   # Graphical description
+      # ggplot2 is a popular package with a lot of capabilities for creating better looking graphics
+library(ggplot2)
+      # ggplot is a function within the popular ggplot2 package
+      # ggplot() is used to construct a plot incrementally, using the + operator
+      #    to add layers to the existing ggplot object
+         # Histogram of Times by Gender
+Gender <- marathon$Gender
+ggplot(marathon, aes(x=marathon$Time, fill = Gender)) + geom_histogram(position = "dodge", bins = 10) + xlab("Time (hours)") + ggtitle("New York Marathon Winners, 1970-1999")
+
+# Returning to the techniques in the main R package
+   # Boxplot and Scatterplot of Times by Gender, Year
+boxplot(marathon$Time~marathon$Gender)
+plot(marathon$Year, marathon$Time, col=c("red","blue")[marathon$Gender])
+
+   # line chart
+      # reorder Marathon data frame by year
+marathon<-marathon[order(marathon$Year),]
+marathon
+      # plot set up
+plot(marathon$Year, marathon$Time, type = "n", col=c("red","blue")[marathon$Gender], xlab = "Year", ylab = "Running Time (hours)")
+      # add points
+LineF <- subset(marathon, marathon$Gender=="f")
+LineM <- subset(marathon, marathon$Gender=="m")
+points(LineF$Year, LineF$Time, type = "p", col = "red", pch = 22)
+points(LineM$Year, LineM$Time, type = "p", col = "blue", pch = 21)
